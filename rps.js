@@ -1,55 +1,70 @@
 let playerScore = 0
 let computerScore = 0
-let roundWinner = ''
+const ROCK = 'Rock'
+const PAPER = 'Paper'
+const SCISSORS = 'Scissors'
+
+
+function game() {
+       for (let i = 0; i < 5; i++) {
+        console.log(`Round ${i}:`)
+        let playerSelection = prompt('Enter your choice (ROCK, PAPER, or SCISSORS)')
+        let computerSelection = getRandomChoice()
+        playRound(playerSelection.toUpperCase(), computerSelection)
+        console.log(`Player Score: ${playerScore}`)
+        console.log(`Computer Score: ${computerScore}`)
+        if (isGameOver()) {
+            console.log(`Game Over! ${getWinner()} wins!`)
+        }
+    }
+}
 
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection === computerScore) {
-    prompt("It's a tie!")
-    roundWinner = 'Tie'
+    switch (true) {
+        case playerSelection === computerSelection:
+            roundWinner = 'Tie'
+            break 
+        case playerSelection === ROCK && computerSelection === SCISSORS:
+        case playerSelection === PAPER && computerSelection === ROCK:
+        case playerSelection === SCISSORS && computerSelection === PAPER:
+             playerScore++
+             roundWinner = 'User'
+            break
+        case computerSelection === ROCK && playerSelection === SCISSORS:
+        case computerSelection === PAPER && playerSelection === ROCK:
+        case computerSelection === SCISSORS && playerSelection === PAPER:
+             computerScore++
+             roundWinner = 'Computer'
+             break        
     }
-    if (
-    (playerSelection === 'Rock' && computerSelection === 'Scissors')
-    (playerSelection === 'Paper' && computerSelction === 'Rock')
-    (playerSelection === 'Scissors' && computerSelection === 'Paper')
-    ) {
-    playerScore++
-    roundWinner = 'Player'
-    }
-    if (
-    (computerSelection === 'Rock' && playerSelection === 'Scissors') ||
-    (computerSelection === 'Paper' && playerSelction === 'Rock') ||
-    (computerSelection === 'Scissors' && playerSelection === 'Paper')
-    ) {
-    computerScore++
-    roundWinner = 'Terminator'
-    }
-    updateScoreMessage(roundWinner,playerSelection,computerSelection)
 }
-  function game(playRound) {
-    for (let i = 0; i < 5; i++) {
-       console.log
-    }
-  }
-  for(let i = 0; i < 5; i++) {
-    let playerScore = 0; playerScore < 5; playerScore++
-    let computerScore = 0; computerScore < 5; computerScore++
-}
+
 
 function getRandomChoice() {
     let randomNumber = Math.floor(Math.random() * 3)
     switch (randomNumber) {
         case 0:
-            return 'Rock'
+            return ROCK
         case 1:
-            return 'Paper'
+            return PAPER
         case 2: 
-            return 'Scissors'
+            return SCISSORS
+            break
     }
 }
 
 function isGameOver() {
     return playerScore === 5 || computerScore === 5
 }
-const playerSelection = prompt("Start the game by picking among 'Rock, Paper, Scissors'")
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+
+function getWinner() {
+    if (playerScore > computerScore) {
+    return 'User'
+    }
+    else if (computerScore > playerScore) {
+    return 'Computer'
+    }
+    else { 
+    return 'Tie'
+    }
+}
